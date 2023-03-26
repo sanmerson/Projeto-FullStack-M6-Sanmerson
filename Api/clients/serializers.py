@@ -21,5 +21,6 @@ class ClientSerializer(serializers.ModelSerializer):
             'id',
             'name',
             'phone',
+            'user_id',
             'create_at'
         ]
