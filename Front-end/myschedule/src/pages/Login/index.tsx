@@ -1,14 +1,15 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useForm } from "react-hook-form";
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { UserContext } from '../../context/Autorization';
 import { iFormLogin } from '../../interfaces/typeContexts';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 export const Login = () => {
     const {LoginUser} = useContext(UserContext);
+    const navigate = useNavigate();
 
     const schema = yup.object().shape({
         password : yup.string().required('digite sua senha'),
@@ -18,6 +19,13 @@ export const Login = () => {
     const { register, handleSubmit, formState: { errors }} = useForm<iFormLogin>({
         resolver: yupResolver(schema)
     })
+
+    useEffect(() =>{
+        if(window.localStorage.getItem("@MySchedule:token")){
+            navigate('/dashboard',{replace: true})
+        }
+    }, [])
+    
 
     return (
         <>
