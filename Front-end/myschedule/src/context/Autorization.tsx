@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-//import { useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { api } from '../services/api'
 
 interface IUserContextProps{
@@ -7,13 +7,12 @@ interface IUserContextProps{
     password : string; 
 }
 
-
 export const UserContext = createContext<any>({} as any);
 
 export const UserProvider = ({ children } : any) => {
 
     const [load, setLoad] = useState<boolean>(true);
-    //const navigator = useNavigate();
+    const navigate = useNavigate();
 
     async function LoginUser(data : IUserContextProps) {
         try {
@@ -23,7 +22,8 @@ export const UserProvider = ({ children } : any) => {
 
             localStorage.setItem('@MySchedule:token', access)
             localStorage.setItem('@MySchedule:refresh', refresh)
-
+            api.defaults.headers.authorization = `Bearer ${access}`
+            navigate('/dashboard', {replace: true})
         } catch (error) {
            console.error(error)
         }
@@ -32,6 +32,7 @@ export const UserProvider = ({ children } : any) => {
     async function RegisterUser(data:any) {
         try {
             const resp = await api.post('users/', data)
+            navigate('/login', {replace: true})
         } catch (error) {
             console.error(error)
         }
