@@ -5,6 +5,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { UserContext } from '../../context/Autorization';
 import { iFormLogin } from '../../interfaces/typeContexts';
 import { Link, useNavigate } from 'react-router-dom';
+import { StyledButton } from '../../styles/styledButton';
+import { StyledContainerLogin, StyledContainerMain, StyledContainerRedirect } from '../../styles/containers';
+import { StyleForms } from '../../styles/forms';
+import { StyleLabels } from '../../styles/labels';
+import { StyleInput } from '../../styles/input';
+import { Headline, StyledTitleH1, StyleErrorText } from '../../styles/typography';
+import { StyleLink } from '../../styles/link';
 
 
 export const Login = () => {
@@ -29,24 +36,27 @@ export const Login = () => {
 
     return (
         <>
-        <div>
-            <h3>Login</h3>
-        </div>
-        <div>
-            <form onSubmit={handleSubmit(LoginUser)}>
-                <label htmlFor='username'>Username</label>
-                <input id='username' placeholder="Username" {...register("username")} />
+        <StyledContainerMain marginMin='25% auto' marginMax='7% auto'>
+            <StyledContainerLogin>
+                <StyledTitleH1 margim='10px 0px'>MySchedule</StyledTitleH1>
+                <div>
+                    <StyleForms onSubmit={handleSubmit(LoginUser)}>
+                        <StyleLabels htmlFor='username'>Username</StyleLabels>
+                        <StyleInput id='username' placeholder="Username" {...register("username")} />
+                        <StyleErrorText>{errors.username?.message}</StyleErrorText>
+                        <StyleLabels htmlFor='password'>Senha</StyleLabels>
+                        <StyleInput id='password' type='password' placeholder="Digite sua Senha" {...register("password")}/>
+                        <StyleErrorText>{errors.password?.message}</StyleErrorText>
 
-                <label htmlFor='password'>Password</label>
-                <input id='password' type='password' placeholder="Password" {...register("password")}/>
-
-                <button type='submit'>Login</button>
-            </form>
-        </div>
-        <div>
-            <p>Ainda não possui uma conta?</p>
-            <Link to='/signup'>Cadastrar-se</Link>
-        </div>
+                        <StyledButton color='--black' margin='20px 0px' type='submit'>Login</StyledButton>
+                    </StyleForms>
+                </div>
+                <StyledContainerRedirect>
+                    <Headline>Ainda não possui uma conta?</Headline>
+                    <StyleLink color='--black' margin='10px 0px' to='/signup'>Cadastrar-se</StyleLink>
+                </StyledContainerRedirect>
+            </StyledContainerLogin>
+        </StyledContainerMain>
         </>
     )
 }
