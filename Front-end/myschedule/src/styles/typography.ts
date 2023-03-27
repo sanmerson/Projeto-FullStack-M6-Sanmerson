@@ -46,6 +46,6 @@ export const HeadlineItalic = styled.p<iTypographyMainProps>`
 export const StyleErrorText = styled.p<iTypographyMainProps>`
     font-size: 12px;
     font-style: italic;
-    color: red;
+    color: #cc0000;
     margin: ${(props => props.margim)}
 `
