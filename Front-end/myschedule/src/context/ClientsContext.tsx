@@ -1,9 +1,10 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { IProvider } from "../interfaces/typeContexts";
 import { api } from "../services/api";
 
 export const ClientsContext = createContext<any>({} as any);
 
-export const ClientProvider = ({ children } : any) => {
+export const ClientProvider = ({ children, setModalAddOpen} : IProvider) => {
     const [clients, setClients] = useState();
 
     useEffect(() =>{
@@ -36,5 +37,19 @@ export const ClientProvider = ({ children } : any) => {
         }
     }
 
-    return(<ClientsContext.Provider value={{setClients, clients, removeClients, getClients}}>{children}</ClientsContext.Provider>)
+    async function addClients(data: any) {
+        try {
+            const token = window.localStorage.getItem("@MySchedule:token")
+            await api.post(`clients/`, data,
+            {headers: {
+                'Authorization': `Bearer ${token}` 
+            }})
+            setModalAddOpen(false);
+            getClients()
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    return(<ClientsContext.Provider value={{setClients, clients, removeClients, getClients, addClients}}>{children}</ClientsContext.Provider>)
 }

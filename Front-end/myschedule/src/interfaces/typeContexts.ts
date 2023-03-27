@@ -11,3 +11,8 @@ export interface iFormRegister{
     last_name : string;
     confirmPassword : string;
 }
+
+export interface IProvider{
+    children?: React.ReactNode;
+    setModalAddOpen?: any;
+}

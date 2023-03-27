@@ -1,8 +1,9 @@
-import { useContext} from "react"
+import { useContext, useEffect, useState} from "react"
 import { useNavigate } from "react-router-dom"
+import { AddClientModal } from "../../components/Modais"
 import { NavBar } from "../../components/NavBar"
 import { UserContext } from "../../context/Autorization"
-import { ClientsContext } from "../../context/ClientsContext"
+import { ClientProvider, ClientsContext } from "../../context/ClientsContext"
 import { StyledContainerClients } from "../../styles/article"
 import { StyledContainerAddClient, StyledContainerMain } from "../../styles/containers"
 import { StyledAddButton, StyledButtonNav } from "../../styles/styledButton"
@@ -11,6 +12,7 @@ import { StyledTitleH1, StyledTitleH3 } from "../../styles/typography"
 export const Dashboard = () => {
     const {load} = useContext(UserContext)
     const {clients, removeClients, getClients} = useContext(ClientsContext)
+    const [ModalAddOpen, setModalAddOpen] = useState<any>(false)
     const navigate = useNavigate();
     
     function ClearStorage(){
@@ -19,12 +21,12 @@ export const Dashboard = () => {
         navigate('/', {replace: true})
     }
 
+    useEffect(() =>{
+        getClients()
+    }, [])
+    
     function openClientDetail(id : any) : any{
             console.log(`modalOpen${id}`)
-    }
-
-    function openAddClient(id : any) : any{
-        console.log(`adicionar Cliente`)
     }
 
     return(
@@ -35,9 +37,15 @@ export const Dashboard = () => {
                 </>
             </NavBar>
             <StyledContainerMain marginMin='5% auto' marginMax='3% auto'>
+                {ModalAddOpen && (
+                    <ClientProvider setModalAddOpen={setModalAddOpen}>
+                        <AddClientModal setModalAddOpen={setModalAddOpen}/>
+                    </ClientProvider>
+                )}
+
                 <StyledContainerAddClient>
                     <StyledTitleH1>Seus Clientes</StyledTitleH1>
-                    <StyledAddButton color='--black' onClick={openAddClient}>+</StyledAddButton>
+                    <StyledAddButton color='--black' onClick={()=>{setModalAddOpen(true)}}>+</StyledAddButton>
                 </StyledContainerAddClient>
                 <StyledContainerClients>
                     {clients?.length === 0?
