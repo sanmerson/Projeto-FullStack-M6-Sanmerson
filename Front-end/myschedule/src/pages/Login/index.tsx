@@ -4,6 +4,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { UserContext } from '../../context/Autorization';
 import { iFormLogin } from '../../interfaces/typeContexts';
+import { Link } from 'react-router-dom';
 
 
 export const Login = () => {
@@ -36,7 +37,7 @@ export const Login = () => {
         </div>
         <div>
             <p>Ainda não possui uma conta?</p>
-            <button>Cadastrar-se</button>
+            <Link to='/signup'>Cadastrar-se</Link>
         </div>
         </>
     )
