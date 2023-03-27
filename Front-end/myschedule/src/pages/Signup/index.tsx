@@ -5,6 +5,13 @@ import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { UserContext } from "../../context/Autorization";
 import { iFormRegister } from "../../interfaces/typeContexts";
+import { StyledContainerMain, StyledContainerSingup } from "../../styles/containers";
+import { StyledTitleH1, StyleErrorText } from "../../styles/typography";
+import { StyleForms } from "../../styles/forms";
+import { StyledButton } from "../../styles/styledButton";
+import { StyleLabels } from "../../styles/labels";
+import { StyleInput } from "../../styles/input";
+import { StyleLink } from "../../styles/link";
 
 export const Signup = () => {
     const { RegisterUser } = useContext(UserContext);
@@ -17,6 +24,7 @@ export const Signup = () => {
             .matches(/[^\w]/,'A senha deve possuir um caractere especial')
             .min(8, 'A senha deve ter no minimo 8 caracteres'),
         confirmPassword : yup.string()
+            .required('Confirmação de senha e obrigatoria')
             .oneOf([yup.ref('password')],
             'Confirmação de senha deve ser igual a senha'
             ),
@@ -36,39 +44,39 @@ export const Signup = () => {
     })
     return(
         <>
-        <div>
-            <h3>Cadastre-se</h3>
-        </div>
-        <div>
-            <form onSubmit={handleSubmit(RegisterUser)}>
-                <label htmlFor='username' >Username</label>
-                <input id='username' placeholder="Username" {...register("username")}/>
-                <p>{errors.username?.message}</p>
+        <StyledContainerMain marginMin='10% auto' marginMax='7% auto'>
+            <StyledContainerSingup>
+                <StyledTitleH1 margim='10px 0px'>Cadastre-se</StyledTitleH1>
+                <StyleForms onSubmit={handleSubmit(RegisterUser)}>
+                    <StyleLabels htmlFor='username' >Username</StyleLabels>
+                    <StyleInput id='username' placeholder="Username" {...register("username")}/>
+                    <StyleErrorText>{errors.username?.message}</StyleErrorText>
 
-                <label htmlFor='email'>email</label>
-                <input id='email' placeholder="Email" {...register("email")}/>
-                <p>{errors.email?.message}</p>
+                    <StyleLabels htmlFor='email'>Email</StyleLabels>
+                    <StyleInput id='email' placeholder="Email" {...register("email")}/>
+                    <StyleErrorText>{errors.email?.message}</StyleErrorText>
 
-                <label htmlFor='password' >password</label>
-                <input id='password' placeholder="Senha" type='password' {...register("password")}/>
-                <p>{errors.password?.message}</p>
+                    <StyleLabels htmlFor='password'>Senha</StyleLabels>
+                    <StyleInput id='password' placeholder="Senha" type='password' {...register("password")}/>
+                    <StyleErrorText>{errors.password?.message}</StyleErrorText>
 
-                <label htmlFor='confirmPassword' >Confirme sua senha</label>
-                <input id='confirmPassword' placeholder="Confirme sua senha" type='password'{...register("confirmPassword")}/>
-                <p>{errors.confirmPassword?.message}</p>
+                    <StyleLabels htmlFor='confirmPassword' >Confirme sua senha</StyleLabels>
+                    <StyleInput id='confirmPassword' placeholder="Confirme sua senha" type='password'{...register("confirmPassword")}/>
+                    <StyleErrorText>{errors.confirmPassword?.message}</StyleErrorText>
 
-                <label htmlFor='first_name' >Nome</label>
-                <input id='first_name' placeholder="Nome" {...register("first_name")}/>
-                <p>{errors.first_name?.message}</p>
-                
-                <label htmlFor='last_name' >Sobrenome</label>
-                <input id='last_name' placeholder="Sobrenome" {...register("last_name")}/>
-                <p>{errors.last_name?.message}</p>
+                    <StyleLabels htmlFor='first_name' >Nome</StyleLabels>
+                    <StyleInput id='first_name' placeholder="Nome" {...register("first_name")}/>
+                    <StyleErrorText>{errors.first_name?.message}</StyleErrorText>
+                    
+                    <StyleLabels htmlFor='last_name' >Sobrenome</StyleLabels>
+                    <StyleInput id='last_name' placeholder="Sobrenome" {...register("last_name")}/>
+                    <StyleErrorText>{errors.last_name?.message}</StyleErrorText>
 
-                <button type='submit'>Cadastrar</button>
-            </form>
-            <Link to='/'>Voltar</Link>
-        </div>
+                    <StyledButton color='--black' margin='20px 0px' type='submit'>Cadastrar</StyledButton>
+                </StyleForms>
+                <StyleLink color='--black' margin='10px 5%'  to='/'>Voltar</StyleLink>
+            </StyledContainerSingup>
+        </StyledContainerMain>
         </>
     )
 }

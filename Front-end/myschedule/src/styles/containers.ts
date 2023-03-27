@@ -45,3 +45,20 @@ export const StyledContainerRedirect = styled.div<iContainerMainProps> `
     text-align: center;
     margin: 0 auto;
 `
+
+export const StyledContainerSingup = styled.div<iContainerMainProps> `
+    background-color: var(--gray-3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 90%;
+    height: 50%;
+    text-align: center;
+    padding: 30px 0px 10px 0px;
+    border-radius: 5px;
+    border: 1px solid var(--black);
+
+    @media screen and (min-width: 720px){
+        width: 25%;
+    }
+`
