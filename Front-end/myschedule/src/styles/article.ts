@@ -82,6 +82,13 @@ export const StyledContainerClients = styled.article`
         font-weight: bold;
         font-size: 16px;
         color: var(--gray-1);
+        width: 40%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        @media screen and (min-width: 720px){
+            width: 100%;
+        }
     }
 
     @media screen and (min-width: 720px){
