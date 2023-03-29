@@ -6,12 +6,14 @@ export const ClientsContext = createContext<any>({} as any);
 
 export const ClientProvider = ({ children, setModalAddOpen} : IProvider) => {
     const [clients, setClients] = useState();
+    const [selectedClient, setSelectedClient] = useState();
 
     useEffect(() =>{
         getClients()
     }, [])
     
     async function getClients() {
+        
         try {
             const token = window.localStorage.getItem("@MySchedule:token")
             const {data} = await api.get('clients/',
@@ -19,19 +21,21 @@ export const ClientProvider = ({ children, setModalAddOpen} : IProvider) => {
                 'Authorization': `Bearer ${token}` 
               }})
             setClients(data)
+            
         } catch (error) {
             console.error(error)
         }
     }
 
-    async function removeClients(id : any) {
+    async function removeClients(id : bigint, setModalDelOpen : any) {
         try {
             const token = window.localStorage.getItem("@MySchedule:token")
             const {data} = await api.delete(`clients/${id}`,
              {headers: {
                 'Authorization': `Bearer ${token}` 
               }})
-            getClients()
+           await getClients()
+           setModalDelOpen(false)
         } catch (error) {
             console.error(error)
         }
@@ -44,12 +48,12 @@ export const ClientProvider = ({ children, setModalAddOpen} : IProvider) => {
             {headers: {
                 'Authorization': `Bearer ${token}` 
             }})
+            await getClients()
             setModalAddOpen(false);
-            getClients()
         } catch (error) {
             console.error(error)
         }
     }
 
-    return(<ClientsContext.Provider value={{setClients, clients, removeClients, getClients, addClients}}>{children}</ClientsContext.Provider>)
+    return(<ClientsContext.Provider value={{setClients, clients, removeClients, getClients, addClients, setSelectedClient, selectedClient}}>{children}</ClientsContext.Provider>)
 }

@@ -4,15 +4,16 @@ import { IProvider } from "../../interfaces/typeContexts"
 import * as yup from 'yup';
 import { useContext } from "react";
 import { ClientsContext } from "../../context/ClientsContext";
-import { StyleAddClientModal } from "../../styles/modal";
+import { StyleAddClientModal, StyleDelClientModal } from "../../styles/modal";
 import { StyledTitleH3 } from "../../styles/typography";
 import { StyledAddButton, StyledButton } from "../../styles/styledButton";
 import { StyleForms } from "../../styles/forms";
 import { StyleLabels } from "../../styles/labels";
 import { StyleInput } from "../../styles/input";
+import { StyledContainerDelClient } from "../../styles/containers";
 
 export const AddClientModal = ({ children, setModalAddOpen} : IProvider) => {
-    const { addClients } = useContext(ClientsContext)
+    const { addClients, selectedClient } = useContext(ClientsContext)
 
     const schema = yup.object().shape({
         name : yup.string().required("Digite o nome do cliente"),
@@ -47,6 +48,25 @@ export const AddClientModal = ({ children, setModalAddOpen} : IProvider) => {
                 </div>
             </div>
         </StyleAddClientModal>
+        </>
+    )
+}
+
+export const DelClientModal= ( {children, setModalDelOpen, selectedClient} : IProvider)=>{
+    const { removeClients } = useContext(ClientsContext)
+    return(
+        <>
+            <StyleDelClientModal>
+                <div className="Background">
+                    <div className="Content">
+                        <StyledTitleH3>Deseja remover esse cliente?</StyledTitleH3>
+                        <div>
+                            <StyledButton color='--black' margin="10px 0px" onClick={()=>{removeClients(selectedClient, setModalDelOpen)}}>Sim</StyledButton>
+                            <StyledButton color='--black' margin="10px 0px" onClick={()=>{setModalDelOpen(false)}}>Não</StyledButton>
+                        </div>
+                    </div>
+                </div>
+            </StyleDelClientModal>
         </>
     )
 }

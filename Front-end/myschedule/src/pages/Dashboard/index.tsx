@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState} from "react"
 import { useNavigate } from "react-router-dom"
-import { AddClientModal } from "../../components/Modais"
+import { AddClientModal, DelClientModal } from "../../components/Modais"
 import { NavBar } from "../../components/NavBar"
 import { UserContext } from "../../context/Autorization"
 import { ClientProvider, ClientsContext } from "../../context/ClientsContext"
@@ -11,8 +11,9 @@ import { StyledTitleH1, StyledTitleH3 } from "../../styles/typography"
 
 export const Dashboard = () => {
     const {load} = useContext(UserContext)
-    const {clients, removeClients, getClients} = useContext(ClientsContext)
+    const {clients, removeClients, getClients, setSelectedClient, selectedClient } = useContext(ClientsContext)
     const [ModalAddOpen, setModalAddOpen] = useState<any>(false)
+    const [ModalDelOpen, setModalDelOpen] = useState<any>(false)
     const navigate = useNavigate();
     
     function ClearStorage(){
@@ -23,7 +24,12 @@ export const Dashboard = () => {
 
     useEffect(() =>{
         getClients()
-    }, [])
+    }, [ModalAddOpen, ModalDelOpen])
+
+    function confirmDelection(id : any){
+        setSelectedClient(id)
+        setModalDelOpen(true)
+    }
     
     function openClientDetail(id : any) : any{
             console.log(`modalOpen${id}`)
@@ -42,7 +48,11 @@ export const Dashboard = () => {
                         <AddClientModal setModalAddOpen={setModalAddOpen}/>
                     </ClientProvider>
                 )}
-
+                {ModalDelOpen && (
+                    <ClientProvider setModalDelOpen={setModalDelOpen} selectedClient={selectedClient}>
+                        <DelClientModal setModalDelOpen={setModalDelOpen} selectedClient={selectedClient}/>
+                    </ClientProvider>
+                )}
                 <StyledContainerAddClient>
                     <StyledTitleH1>Seus Clientes</StyledTitleH1>
                     <StyledAddButton color='--black' onClick={()=>{setModalAddOpen(true)}}>+</StyledAddButton>
@@ -58,8 +68,8 @@ export const Dashboard = () => {
                         <ul className="Clients">
                             {clients?.map((client : any)=>{
                                 return(
-                                    <li id={client.id} key={client.id} onClick={()=>{openClientDetail(client.id)}}>
-                                        <button onClick={()=>{removeClients(client.id)}}>X</button>
+                                    <li id={client.id} key={client.id}>
+                                        <button onClick={()=>{confirmDelection(client.id)}}>X</button>
                                         <p>{client.name}</p>
                                         <p>{client.phone}</p>
                                     </li>
