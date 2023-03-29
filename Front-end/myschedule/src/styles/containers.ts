@@ -98,3 +98,22 @@ export const StyledContainerNavBar = styled.div`
         justify-content: space-between;
     }
 `
+
+export const StyledContainerDelClient = styled.div<iContainerMainProps> `
+    background-color: var(--gray-3);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    height: 50%;
+    text-align: center;
+    padding: 10px 15px 10px 15px;
+    margin: 10px 0px 0px 0px;
+    border-radius: 5px 5px 0px 0px;
+    border: 1px solid var(--black);
+
+    @media screen and (min-width: 720px){
+        width: 90%;
+    }
+`

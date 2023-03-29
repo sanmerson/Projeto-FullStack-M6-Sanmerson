@@ -15,4 +15,7 @@ export interface iFormRegister{
 export interface IProvider{
     children?: React.ReactNode;
     setModalAddOpen?: any;
+    setModalDelOpen?: any;
+    id?: any;
+    selectedClient?: any;
 }
