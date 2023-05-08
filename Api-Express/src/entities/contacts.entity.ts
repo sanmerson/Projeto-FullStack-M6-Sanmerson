@@ -26,7 +26,9 @@ import { Clients } from "./clients.entity";
     @UpdateDateColumn()
     updated_at: Date;
 
-    @ManyToOne(() => Clients, (Clients) => Clients.contacts)
+    @ManyToOne(() => Clients, (Clients) => Clients.contacts,{
+      onDelete: 'CASCADE' 
+    })
     clients: Clients;
 
   }

@@ -23,7 +23,9 @@ import { Contacts } from "./contacts.entity";
     @CreateDateColumn()
     create_at: Date;
 
-    @ManyToOne(() => User, (user) => user.clients)
+    @ManyToOne(() => User, (user) => user.clients,{
+      onDelete: 'CASCADE' 
+    })
     user: User
 
     

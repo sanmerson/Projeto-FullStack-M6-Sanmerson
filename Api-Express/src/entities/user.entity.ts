@@ -40,7 +40,9 @@ import { Clients } from "./clients.entity";
       this.password = hashSync(this.password, 10);
     }
 
-    @OneToMany(() => Clients, (clients) => clients.user)
+    @OneToMany(() => Clients, (clients) => clients.user,{
+      onDelete: 'CASCADE' 
+    })
     clients : Clients[];
   }
   

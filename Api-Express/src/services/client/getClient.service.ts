@@ -3,7 +3,7 @@ import { Clients } from "../../entities/clients.entity";
 import { clientSerealizerResponse } from "../../serializers/clients.serializer";
 
 
-const getClientService = async (id:string): Promise<any> => {
+const getClientService = async (id:string): Promise<any[]> => {
   const clientRepository = AppDataSource.getRepository(Clients);
 
   const clients = await clientRepository.find({
@@ -11,10 +11,7 @@ const getClientService = async (id:string): Promise<any> => {
     relations: { user: true },
   })
 
-  const ResponseClient = await clientSerealizerResponse.validate(clients, {
-    stripUnknown:true,
-})
-  return ResponseClient;
+  return clients;
 };
 
 export { getClientService };

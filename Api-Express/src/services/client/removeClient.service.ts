@@ -11,7 +11,6 @@ const removeClientService = async (id:string): Promise<any> => {
     throw new AppError("client does not exists!", 404);
 }
 
-
   await clientRepository.remove(findClient)
 
 };
