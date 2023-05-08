@@ -50,7 +50,7 @@ export const StyledContainerClients = styled.article`
 
         @media screen and (min-width: 720px){
             flex-direction: column;
-            width: 15%;
+            width: 20%;
             min-height: 180px;
             &:hover{
                 border: 2px solid white;
@@ -81,6 +81,8 @@ export const StyledContainerClients = styled.article`
     & > .Clients > li > p{
         font-weight: bold;
         font-size: 16px;
+        overflow-wrap: break-word;
+        max-width:90%;
         color: var(--gray-1);
     }
 

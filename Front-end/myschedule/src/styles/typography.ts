@@ -23,6 +23,12 @@ export const StyledTitleH3 = styled.h3<iTypographyMainProps>`
     color: var(--gray-0);
     margin: ${(props => props.margim)}
 `
+export const HeadlineBig = styled.p<iTypographyMainProps>`
+    font-size: 16px;
+    color: var(--gray-1);
+    margin: ${(props => props.margim)}
+`
+
 export const Headline = styled.p<iTypographyMainProps>`
     font-size: 12px;
     color: var(--gray-1);

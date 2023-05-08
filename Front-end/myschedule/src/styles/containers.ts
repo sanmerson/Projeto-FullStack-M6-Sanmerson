@@ -98,3 +98,35 @@ export const StyledContainerNavBar = styled.div`
         justify-content: space-between;
     }
 `
+
+
+export const StyledContainerContacts = styled.ul`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    overflow: auto;
+    max-width: 95%;
+
+    @media screen and (min-width: 720px){
+        overflow: scroll;
+    }
+
+    &>li {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+        background-color: var(--gray-2);
+        border: 2px solid transparent;
+        border-radius: 5px;
+        margin: 0px 0px 15px 15px;
+        overflow-wrap: break-word;
+        max-width: 55%;
+        height: 200px;
+    }
+
+    & > li > p {
+        margin: 5px;
+    }
+`

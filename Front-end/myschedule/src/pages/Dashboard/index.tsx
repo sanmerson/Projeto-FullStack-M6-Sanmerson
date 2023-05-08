@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState} from "react"
 import { useNavigate } from "react-router-dom"
-import { AddClientModal } from "../../components/Modais"
+import { AddClientModal } from "../../components/Modais/addClient"
 import { NavBar } from "../../components/NavBar"
 import { UserContext } from "../../context/Autorization"
 import { ClientProvider, ClientsContext } from "../../context/ClientsContext"
@@ -8,9 +8,10 @@ import { StyledContainerClients } from "../../styles/article"
 import { StyledContainerAddClient, StyledContainerMain } from "../../styles/containers"
 import { StyledAddButton, StyledButtonNav } from "../../styles/styledButton"
 import { StyledTitleH1, StyledTitleH3 } from "../../styles/typography"
+import { EditClientModal } from "../../components/Modais/detailsClient"
 
 export const Dashboard = () => {
-    const {load} = useContext(UserContext)
+    const {load, setEditModal, editModal, editClient, setEditClient} = useContext(UserContext)
     const {clients, removeClients, getClients} = useContext(ClientsContext)
     const [ModalAddOpen, setModalAddOpen] = useState<any>(false)
     const navigate = useNavigate();
@@ -23,14 +24,16 @@ export const Dashboard = () => {
 
     useEffect(() =>{
         getClients()
-    }, [])
+    }, [ModalAddOpen, editModal])
     
     function openClientDetail(id : any) : any{
-            console.log(`modalOpen${id}`)
+        setEditModal(true)
+        setEditClient(id)
     }
 
     return(
         <>
+
             <NavBar>
                 <>
                 <StyledButtonNav onClick={ClearStorage}>sair</StyledButtonNav>
@@ -42,7 +45,9 @@ export const Dashboard = () => {
                         <AddClientModal setModalAddOpen={setModalAddOpen}/>
                     </ClientProvider>
                 )}
-
+                {editModal && (
+                    <EditClientModal></EditClientModal>
+                )}
                 <StyledContainerAddClient>
                     <StyledTitleH1>Seus Clientes</StyledTitleH1>
                     <StyledAddButton color='--black' onClick={()=>{setModalAddOpen(true)}}>+</StyledAddButton>
@@ -59,9 +64,9 @@ export const Dashboard = () => {
                             {clients?.map((client : any)=>{
                                 return(
                                     <li id={client.id} key={client.id} onClick={()=>{openClientDetail(client.id)}}>
-                                        <button onClick={()=>{removeClients(client.id)}}>X</button>
                                         <p>{client.name}</p>
                                         <p>{client.phone}</p>
+                                        <p>{client.email}</p>
                                     </li>
                                 )
                             })}
